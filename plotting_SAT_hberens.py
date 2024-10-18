@@ -8,11 +8,12 @@ import numpy as np
 # Plot results function
 def plot_results(csv_file):
 
+    # initialize lists 
     num_vars_list = []
     elapsed_time_list = []
     satisfiable_list = []
 
-    # Read the CSV file
+    # read the CSV file
     with open(csv_file, 'r') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
@@ -23,12 +24,13 @@ def plot_results(csv_file):
     # start plotting 
     plt.figure(figsize=(8, 7))
     for i in range(len(num_vars_list)):
+        # make green circles for satisfiable and red x's for unsatisfiable 
         if satisfiable_list[i] == 'green':
             plt.scatter(num_vars_list[i], elapsed_time_list[i], c='green', label='Satisfiable' if 'Satisfiable' not in plt.gca().get_legend_handles_labels()[1] else "")
         else:
             plt.scatter(num_vars_list[i], elapsed_time_list[i], c='red', marker='x', label='Unsatisfiable' if 'Unsatisfiable' not in plt.gca().get_legend_handles_labels()[1] else "")
 
-    # Fit an exponential curve to the UNSAT points using polyfit
+    # add labels and legend 
     plt.xlabel('Number of Variables')
     plt.ylabel('Time (seconds)')
     plt.title('DPLL Algorithm Execution Time vs. Number of Variables')
